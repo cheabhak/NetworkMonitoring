@@ -1,0 +1,12 @@
+#!/bin/sh
+while true; do
+sleep 30
+ETH3=$(grep eth3 /proc/net/dev)
+E3DOWN=$(echo $ETH3|tr \: \ |awk '{print $2}')
+E3UP=$(echo $ETH3|tr \: \ |awk '{print $10}')
+rrdupdate /var/www/html/snmp/rrd/eth3.rrd N:\
+${E0DOWN}:${E0UP}:${E1DOWN}:${E1UP}:\
+`/usr/bin/snmpget -v 2c -c public -Oqv 10.211.55.2 IF-MIB::ifInOctets.3`:\
+`/usr/bin/snmpget -v 2c -c public -Oqv 10.211.55.2 IF-MIB::ifOutOctets.3`:\
+
+done

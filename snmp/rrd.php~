@@ -1,0 +1,16 @@
+<?php
+$options = array(
+ "--step", "300",            // Use a step-size of 5 minutes
+ "--start", "-6 months",     // this rrd started 6 months ago
+ "DS:success:ABSOLUTE:600:0:U",
+ "DS:failure:ABSOLUTE:600:0:U",
+ "RRA:AVERAGE:0.5:1:288",
+ "RRA:AVERAGE:0.5:12:168",
+ "RRA:AVERAGE:0.5:228:365",
+ );
+
+$ret = rrd_create("rrd/".$hello.".rrd", $options, count($options));
+if (! $ret) {
+ echo "<b>Creation error: </b>".rrd_error()."\n";
+}
+?>
